@@ -1,0 +1,19 @@
+<%- include('../layouts/header') %>
+
+<div class="container" style="padding-top: 85px;">
+    <form method="POST" action="/post/write-post">
+        <div class="form-group">
+          <label>Title</label>
+          <input type="text" name="title" class="form-control" placeholder="Type your title">
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea id="editor" name="description" class="form-control" cols="30" rows="10"></textarea>
+          <!-- <input type="text" class="form-control" placeholder="Content"> -->
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Submit</button>
+    </form>
+</div>
+
+
+<%- include('../layouts/footer') %>
