@@ -6,6 +6,8 @@ const middlewares = require('../middlewares/authPage.js')
 const postRoutes = require('../routes/post.routes.js')
 const Post = require('../models/Post.js')
 const moment = require('moment')
+const validator = require('../utils/validator.js')
+const { validationResult } = require('express-validator')
 
 module.exports = (app) => {
     app.use('/admin', adminRoutes)
@@ -13,20 +15,13 @@ module.exports = (app) => {
 
     app.get('/', async (req, res)=> {
         const posts = await Post.find({})
-        if (req.user) {
-            res.render('index', {
-                isLoggedIn: req.isAuthenticated(),
-                user: req.user,
-                posts,
-                moment
-            })
-        } else {
-            res.render('index', {
-                isLoggedIn: req.isAuthenticated(),
-                posts,
-                moment
-            })
-        }
+        req.session.isLoggedIn = req.isAuthenticated()
+        
+        res.render('index', {
+            user: req.user,
+            posts,
+            moment
+        })
     })   
     
     app.get('/about', middlewares.authPage, (req, res)=>res.send('about page'))
@@ -38,8 +33,10 @@ module.exports = (app) => {
     })
     app.post('/login', passport.authenticate('local', {failureRedirect: '/login', failureFlash : true}), (req, res) => {
         if (req.user.role == 1) {
+            req.session.isLoggedIn = req.isAuthenticated();
             res.redirect('/admin/dashboard')
         } else {
+            req.session.isLoggedIn = req.isAuthenticated();
             res.redirect('/')
         }
     })  
@@ -54,28 +51,51 @@ module.exports = (app) => {
     app.get('/signup', (req, res) => {
         res.render('auth/signup')
     })
-    app.post('/signup', (req, res) => {
-        try {
-            bcrypt.hash(req.body.password, 10, function(err, hash) {
-                const user = new User({
-                    name: req.body.name,
-                    email: req.body.email,
-                    password: hash,
-                    role: 0
-                })
-                
-                user.save().then(userSaved => {
-                    if (userSaved.role == 1) {
-                        res.redirect('/admin/dashboard')
-                    } else {
-                        res.redirect('/')
-                    }
-                })
-            });
-        } catch (err) {
-            console.log(err)
-        }
-        
-       
+
+    app.get('/signed-up', (req, res) => {
+        res.render('auth/signed-up')
     })
+
+    app.post('/signup',validator.signupCheck(), async (req, res) => {
+            const username = await User.findOne({name: req.body.name})
+            const email = await User.findOne({email: req.body.email})
+            let error = {};
+            const result = validationResult(req)
+            const errors = result.array()                
+
+            if (username) {
+                errors.push({
+                    msg: 'Username da ton tai',
+                    path: 'name'
+                })
+            }
+            if (email) {
+                errors.push({
+                    msg: 'email da ton tai',
+                    path: 'email'
+                })
+            }
+            
+            if (errors.length > 0) {
+                res.render('auth/signup', {errors})
+            } else {
+                try {
+                    bcrypt.hash(req.body.password, 10, function(err, hash) {
+                        const user = new User({
+                            name: req.body.name,
+                            email: req.body.email,
+                            password: hash,
+                            role: 0
+                        })
+                        
+                        user.save().then(user => {
+                            res.redirect('/signed-up')
+                        })
+                    });
+                } catch (err) {
+                    console.log(err)
+                }
+            }
+        }
+    )
 }

@@ -32,7 +32,11 @@ passportConfig(passport);
 
 app.use((req, res, next)=> {
     res.locals.message = req.session.message;
+    res.locals.isLoggedIn = req.session.isLoggedIn
+    console.log(res.locals.isLoggedIn)
     delete req.session.message;
+    delete req.session.isLoggedIn;
+    
     next();
 })
 
