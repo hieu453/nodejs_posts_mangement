@@ -8,5 +8,5 @@ module.exports = {
             check('email', 'Email ko hop le').isEmail(),
             check('password', 'password phai toi thieu 6 ky tu').isLength({min:6})
         ]
-    }
+    },
 }

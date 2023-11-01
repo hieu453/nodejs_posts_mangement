@@ -18,10 +18,6 @@ const userSchema = Schema({
         type: Number,
         required: true
     },
-    token: {
-        type: String,
-        default: ''
-    }
 })
 
 module.exports = mongoose.model('User', userSchema)

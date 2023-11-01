@@ -1,6 +1,14 @@
+const moment = require('moment')
+const Post = require('../models/Post.js')
 
 module.exports = {
-    index(req, res) {
-        res.render('index')
+    async index(req, res) {
+        const posts = await Post.find({})
+        req.session.isLoggedIn = req.isAuthenticated()
+        req.session.user = req.user;
+        res.render('index', {
+            posts,
+            moment
+        })
     }
 }

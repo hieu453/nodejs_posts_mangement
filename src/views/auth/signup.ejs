@@ -57,6 +57,13 @@
                               <div class="form-outline flex-fill mb-0">
                                 <label class="form-label">Password</label>
                                 <input type="password" name="password" id="password" class="form-control" />
+                                <% if (typeof errors != 'undefined') { %>
+                                  <% errors.forEach(error => { %>
+                                    <% if (error.path == 'password') { %>
+                                        <label class="form-label text-danger"><%= error.msg %></label>
+                                    <% } %>
+                                  <% }) %>
+                                <% } %>
                               </div>
                             </div>
           
