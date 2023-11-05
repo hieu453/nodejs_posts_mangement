@@ -4,7 +4,11 @@ const router = express.Router()
 const Post = require('../models/Post.js')
 const moment = require('moment')
 
-router.get('/write-post', middlewares.authPage ,(req, res, next) => res.render('posts/write-post', { isLoggedIn: req.isAuthenticated(), user: req.user }))
+router.get('/write-post', middlewares.authPage ,(req, res, next) => res.render('posts/write-post', { 
+    
+    user: req.user 
+}))
+
 router.post('/write-post', (req, res) => {
     const data = {
         title: req.body.title,
@@ -13,10 +17,13 @@ router.post('/write-post', (req, res) => {
     }
     const post = new Post(data)
     post.save()
-        .then(() => console.log('success'))
-        .catch(err => console.log(err))
+        .then(() => {
+            return res.redirect('/')
+        })
+        .catch(err => {
+            return res.json({message: err.message})
+        })
 
-    res.redirect('/')
 })
 
 router.get('/:id', async (req, res, next) => {

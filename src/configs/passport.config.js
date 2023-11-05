@@ -13,13 +13,11 @@ module.exports = (passport) => {
                 const user = await User.findOne({ name: name }) 
                 if (!user) {
                     return done(null, false, { message: 'Incorrect username' })
-                    // console.log("Incorrect username.");
                 }
                 
                 bcrypt.compare(password, user.password).then(function(result) {
                     if (result == false) {
                         return done(null, false, { message: 'Incorrect password' })
-                        // console.log("Incorrect password.")
                     } else {
                         return done(null, user)
                     }

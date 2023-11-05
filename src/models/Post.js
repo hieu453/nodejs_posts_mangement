@@ -3,6 +3,7 @@ const { Schema } = mongoose
 const dompurify = require('dompurify')
 const { JSDOM } = require('jsdom')
 const htmlPurifier = dompurify(new JSDOM().window)
+const mongoosePaginate = require('mongoose-paginate');
 
 const postSchema = new Schema({
     title: {
@@ -18,6 +19,8 @@ const postSchema = new Schema({
         required: true
     },
 }, { timestamps: true })
+
+postSchema.plugin(mongoosePaginate);
 
 postSchema.pre('validate', function (next) {
     if (this.description) {
