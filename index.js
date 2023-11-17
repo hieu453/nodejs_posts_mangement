@@ -25,15 +25,20 @@ app.use(session({
 
 app.use(flash())
 
-app.use(passport.authenticate('session'));
 app.use(passport.initialize());
+app.use(passport.authenticate('session'));
 app.use(passport.session());
-passportConfig(passport);
+app.use((req, res, next) => {
+    passportConfig(req, passport);
+    next();
+})
 
 app.use((req, res, next)=> {
     res.locals.message = req.session.message;
     res.locals.isLoggedIn = req.session.isLoggedIn
     res.locals.user = req.session.user;
+    // res.locals.returnTo = req.session.returnTo;
+    // console.log(req.session.returnTo + ' in middleware')
     delete req.session.message;
     next();
 })

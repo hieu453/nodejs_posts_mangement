@@ -1,0 +1,78 @@
+<%- include('../layouts/header') %>
+
+
+<div class="login-form bg-light mt-4 p-4">
+    <% if (typeof message != 'undefined') { %>
+        <div class="alert alert-`<%= message.type %>` alert-dismissible fade show" role="alert">
+            <%= message.text %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <% } %>
+    <form action="/user/change-info" method="POST" class="row g-3">
+        <h4>Đổi thông tin</h4>
+        <div class="col-12">
+        </div>
+        <div class="col-12">
+            <label>Tên người dùng</label>
+            <% if (typeof errors != 'undefined') { %>
+            <% let flag = 0 %>
+            <% errors.forEach(error => { %>
+            <% if (error.path == 'name') { %>
+            <% flag = 1 %>
+            <input type="text" name="name" class="form-control" 
+                value="<%= error.value %>" required />
+            <% }}) %>
+
+            <% if (flag == 0) { %>
+            <input type="text" name="name" class="form-control" placeholder="Username" value="<%= user.name %>" required/>
+            <% } %>
+
+            <% errors.forEach(error => { %>
+            <% if (error.path == 'name') { %>
+            <label class="form-label text-danger"><%= error.msg %></label>
+            <% } %>
+            <% }) %>
+            <% } else { %>
+            <input type="text" name="name" class="form-control" placeholder="Username" value="<%= user.name %>" required/>
+            <% } %>
+            
+        </div>
+        <div class="col-12">
+            <label>Email</label>
+            <% if (typeof errors != 'undefined') { %>
+            <% let flag = 0 %>                                        
+            <% errors.forEach(error => { %>
+            <% if (error.path == 'email') { %>
+            <% flag = 1 %>
+            <input type="email" name="email" class="form-control" 
+                value="<%= error.value %>" required />
+            <% }}) %>
+
+            <% if (flag == 0) { %>
+            <input type="email" name="email" class="form-control" placeholder="Email" value="<%= user.email %>" required/>
+            <% } %>
+
+            <% errors.forEach(error => { %>
+            <% if (error.path == 'email') { %>
+            <label class="form-label text-danger"><%= error.msg %></label>
+            <% } %>
+            <% }) %>
+            <% } else { %>
+            <input type="email" name="email" class="form-control" placeholder="Email" value="<%= user.email %>" required/>
+            <% } %>
+        </div>
+        <div class="col-6">
+            <span><a href="/user/change-password">Đổi mật khẩu</a></span>
+        </div>
+        <div class="col-6">
+            <button type="submit" class="btn btn-dark float-end">Đổi thông tin</button>
+        </div>
+    </form>
+    <hr class="mt-4">
+    <div class="col-12">
+        <p class="text-center mb-0">Have not account yet? <a href="#">Signup</a></p>
+    </div>
+</div>
+
+
+<%- include('../layouts/footer') %>

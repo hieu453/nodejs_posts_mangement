@@ -1,12 +1,21 @@
 const { check } = require('express-validator')
 
 module.exports = {
-    signupCheck() {
+    auth() {
         return [
-            check('name', 'Username khong duoc de trong').not().isEmpty(),
-            check('name', 'Username phai toi thieu 4 ky tu').isLength({min:4}),
-            check('email', 'Email ko hop le').isEmail(),
-            check('password', 'password phai toi thieu 6 ky tu').isLength({min:6})
+            check('name', 'Username phải tối thiều 4 ký tự').isLength({min:4}),
+            check('email', 'Email khônng hợp lệ').isEmail(),
+            check('password', 'Password phải tối thiểu 6 ký tự').isLength({min:6}),
         ]
     },
+    changeUsernameAndEmail() {
+        return [
+            check('name', 'Username phải tối thiều 4 ký tự').isLength({min:4}),
+            check('email', 'Email khônng hợp lệ').isEmail(),
+            
+        ]
+    },
+    newPasswordCheck() {
+        return check('newPassword', 'Password mới phải tối thiểu 6 ký tự').isLength({min:6})
+    }
 }

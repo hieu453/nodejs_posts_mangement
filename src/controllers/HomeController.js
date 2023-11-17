@@ -1,14 +1,13 @@
 const moment = require('moment')
 const Post = require('../models/Post.js')
-const boostrapPaginator = require('../configs/bootstrapPaginator.js');
-const bootstrapPaginator = require('../configs/bootstrapPaginator.js');
+const bootstrapPaginator = require('../utils/bootstrapPaginator.js');
 
 module.exports = {
     async index(req, res) {
         const page = parseInt(req.query.page) || 1;
-        const limit = 3; // Number of items per page
+        const limit = 9; // Number of items per page
 
-        const result = await Post.paginate({}, { page, limit });
+        const result = await Post.paginate({}, { page, limit, sort: { createdAt: -1 } });
 
         const bPaginator = bootstrapPaginator(page, limit, result)
 
