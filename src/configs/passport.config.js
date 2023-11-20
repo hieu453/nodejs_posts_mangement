@@ -3,7 +3,7 @@ const User = require('../models/User.js')
 const bcrypt = require('bcrypt')
 
 
-module.exports = (req,passport) => {
+module.exports = (passport) => {
     passport.use(new LocalStrategy(
         {
             usernameField: 'name'

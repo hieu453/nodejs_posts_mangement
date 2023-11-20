@@ -5,15 +5,16 @@
         <% posts.forEach(post => { %>
             <div class="col">
             <a href="/post/<%= post._id %>" class="text-decoration-none">
-            <div class="card h-100">
+            <div class="card h-100" title="<%= post.title %>">
                 <img src="/uploads/post_image/<%= post.image %>" class="card-img-top" alt="...">
                 <div class="card-body">
-                <h5 class="card-title text-truncate text-capitalize"><%= post.title %></h5>
+                <h5 class="card-title text-capitalize"><%= post.title %></h5>
                 <p class="card-text text-truncate">Tác giả: <%= post.author %></p>
                 </div>
                 <div class="card-footer">
-                <small class="text-body-secondary">
-                    Đăng ngày: <%= moment(post.createdAt).format('DD-MM-YYYY') %> lúc <%= moment(post.createdAt).format("h:mm") %>
+                <small class="text-body-secondary" id="elapsed-time">
+                    Đăng ngày: <%= moment(post.createdAt).format('DD-MM-YYYY') %> lúc <%= moment(post.createdAt).format("h:mm a") %>
+                    | <%= moment(post.createdAt).fromNow(); %>
                 </small>
                 </div>
             </div>

@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Clean Blog - Start Bootstrap Theme</title>
+        <title>Trang chủ | Các bài viết</title>
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -16,15 +16,15 @@
 	    <link rel="stylesheet" href="/css/custom.css">
         <!-- Font Awesome -->
     	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+        <!-- Datatable CSS -->
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
         <!-- Editor -->
-        <!-- <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script> -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.7.2/tinymce.min.js" integrity="sha512-AHsE0IVoihNpGako20z2Tsgg77r5h9VS20XIKa+ZZ8WzzXxdbiUszgVUmXqpUE8GVUEQ88BKQqtlB/xKIY3tUg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.7.2/plugins/image/plugin.min.js" integrity="sha512-xtTGlamVGmWw1vkqKDqfnobZilklmOAclR6nmrc5HL42rbrgA2cEJgswX4tRln1wRO0eMDzYKlIECNN6YDaL8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script>
             tinymce.init({
                 selector: '#editor',
-                plugins: 'image code',
+                plugins: 'image code media link table fullscreen preview',
                 image_uploadtab: true,
                 file_picker_types: 'image',
                 file_picker_callback: function (cb, value, meta) {
@@ -51,7 +51,9 @@
 
                     input.click();
                 },
-                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+                image_caption: true,
+                image_title: true
             });
         </script>
         <!-- Core theme CSS (includes Bootstrap)-->
@@ -88,7 +90,7 @@
                                         </a>
                                         <ul class="dropdown-menu">
                                             <li>
-                                                <a class="dropdown-item" href="/post/write-post">
+                                                <a class="dropdown-item" href="/user/write-post">
                                                 <i class="fa-solid fa-pencil"></i>
                                                 Viết bài
                                                 </a>
@@ -97,6 +99,12 @@
                                                 <a class="dropdown-item" href="/user/change-info">
                                                 <i class="fa-solid fa-gear"></i>
                                                 Sửa thông tin
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="/user/posts">
+                                                <i class="fa-solid fa-list"></i>
+                                                Bài viết của bạn
                                                 </a>
                                             </li>
                                             <li>

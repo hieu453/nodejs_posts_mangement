@@ -32,7 +32,6 @@ module.exports = {
                 path: 'email'
             })
         }
-        console.log(errors)
         
         if (errors.length > 0) {
             res.render('auth/signup', {errors})
@@ -48,9 +47,13 @@ module.exports = {
                         role: 0,
                     })
                     
-                    user.save().then(() => {
-                        res.redirect('/signed-up')
-                    })
+                    user.save()
+                        .then(() => {
+                            res.redirect('/signed-up')
+                        })
+                        .catch((err) => {
+                            console.log(err)
+                        })
                 });
             } catch (err) {
                 console.log(err)

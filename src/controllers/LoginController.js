@@ -14,21 +14,20 @@ module.exports = {
             req.session.cookie.maxAge = null;
         }
     
-
         if (req.user.role == 1) {
             req.session.isLoggedIn = req.isAuthenticated();
             req.session.user = req.user;
-            res.redirect('/admin/dashboard')
+            res.redirect(req.session.returnTo || '/admin/dashboard')
+            delete req.session.returnTo;
         } else {
             req.session.isLoggedIn = req.isAuthenticated();
             req.session.user = req.user;
-            
-            
             res.redirect(req.session.returnTo || '/')
+            delete req.session.returnTo;
         }
     },
 
-    logout(req, res) {
+    logout(req, res, next) {
         req.logout(function(err) {
             if (err) { return next(err); }
             res.redirect('/');

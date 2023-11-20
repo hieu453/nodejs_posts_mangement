@@ -20,9 +20,9 @@ module.exports = ({_id, email}, redirectUrl, res) => {
             const mailOptions = {
                 from: process.env.AUTH_EMAIL,
                 to: email,
-                subject: "Password Reset",
-                html: `<p>Click this link below to reset your password</p>
-                <a href=${redirectUrl + "/reset-password/" + _id + "/" + resetString}>Click Here</a>
+                subject: "Đặt lại mật khẩu",
+                html: `<p>Click nút bên dưới để đặt lại mật khẩu</p>
+                <a href=${redirectUrl + "/reset-password/" + _id + "/" + resetString}>Bấm vào đây</a>
                 `
             }
 
@@ -38,7 +38,7 @@ module.exports = ({_id, email}, redirectUrl, res) => {
                     newResetPassword.save()
                         .then(() => {
                             transporter.sendMail(mailOptions)
-                                .then(() => res.send('Email sent to reset your password'))
+                                .then(() => res.send('Email khôi phục mật khẩu đã được gửi'))
                                 .catch(err => console.log(err))
                         })
                         .catch(err => console.log(err))

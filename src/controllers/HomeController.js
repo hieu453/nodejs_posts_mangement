@@ -1,4 +1,5 @@
 const moment = require('moment')
+moment.locale('vi')
 const Post = require('../models/Post.js')
 const bootstrapPaginator = require('../utils/bootstrapPaginator.js');
 
@@ -11,7 +12,6 @@ module.exports = {
 
         const bPaginator = bootstrapPaginator(page, limit, result)
 
-
         res.render('index', {
             posts: result.docs,
             page, 
@@ -20,5 +20,18 @@ module.exports = {
             bPaginator
         });
             
+    },
+
+    async allPost(req, res) {
+        try {
+            const post = await Post.findById(req.params.id)
+        
+            res.render('posts/post', {
+                post: post,
+                moment: moment
+            })
+        } catch (err) {
+            res.json({message: "post doesn't exist"})
+        }
     }
 }

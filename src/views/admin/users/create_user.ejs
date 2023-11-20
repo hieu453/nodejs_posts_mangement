@@ -1,0 +1,53 @@
+<%- include('../layouts/header') %>
+<div class="container-scroller">
+<%- include('../layouts/navbar') %>
+<div class="container-fluid page-body-wrapper">
+<%- include('../layouts/sidebar') %>
+<div class="main-panel">
+<div class="content-wrapper">
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h3>Tạo người dùng
+                    <a href="/admin/all-users" class="btn btn-sm btn-primary float-end">Trở lại</a>
+                </h3>
+            </div>
+            <div class="card-body">
+                <form action="/admin/create-user" method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label>Tên</label>
+                            <input type="text" name="name" class="form-control"/>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label>Email</label>
+                            <input type="email" name="email" class="form-control"/>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label>Mật khẩu</label>
+                            <input type="password" name="password" class="form-control"/>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Chức vụ</label>
+                            <select name="role" class="form-control">
+                                <option value="0">User</option>
+                                <option value="1">Admin</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <button type="submit" class="btn btn-primary float-end">Tạo</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+<%- include('../layouts/footer') %>

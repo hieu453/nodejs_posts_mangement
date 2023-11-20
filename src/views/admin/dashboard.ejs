@@ -1,0 +1,44 @@
+<%- include('./layouts/header') %>
+<div class="container-scroller">
+<%- include('./layouts/navbar') %>
+<div class="container-fluid page-body-wrapper">
+<%- include('./layouts/sidebar') %>
+<div class="main-panel">
+<div class="content-wrapper">
+
+<div class="row">
+    <div class="col-md-12 grid-margin">
+			<!-- @if (session('message'))
+				<h6 class="alert alert-success">{{ session('message') }}</h6>
+			@endif -->
+			<div class="me-md-3 me-xl-5">
+				<h2>Dashboard</h2>				
+				<p class="mb-md-0">Your Analytics Dashboard Template</p>
+			</div>  
+
+			<div class="row">
+				<div class="col-md-6">
+					<div class="card card-body bg-primary text-white mb-3">
+						<label>Tổng số bài viết</label>
+						<h1><%= posts %></h1>
+						<a href="/admin/all-posts" class="text-white">Xem</a>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="card card-body bg-danger text-white mb-3">
+						<label>Tổng số người dùng</label>
+						<h1><%= users %></h1>
+						<a href="/admin/all-users" class="text-white">Xem</a>
+					</div>
+				</div>
+			</div>
+      	</div>
+    </div>
+</div>
+
+
+</div>
+</div>
+</div>
+</div>
+<%- include('./layouts/footer') %>

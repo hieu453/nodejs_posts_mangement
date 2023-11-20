@@ -16,7 +16,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(express.static('./src/public'))
 
-app.set('trust proxy', 1) // trust first proxy
+app.set('trust proxy', 1) 
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
@@ -28,17 +28,13 @@ app.use(flash())
 app.use(passport.initialize());
 app.use(passport.authenticate('session'));
 app.use(passport.session());
-app.use((req, res, next) => {
-    passportConfig(req, passport);
-    next();
-})
+
+passportConfig(passport);
 
 app.use((req, res, next)=> {
     res.locals.message = req.session.message;
     res.locals.isLoggedIn = req.session.isLoggedIn
     res.locals.user = req.session.user;
-    // res.locals.returnTo = req.session.returnTo;
-    // console.log(req.session.returnTo + ' in middleware')
     delete req.session.message;
     next();
 })

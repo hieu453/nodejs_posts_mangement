@@ -22,6 +22,10 @@ const postSchema = new Schema({
         type: String,
         required: true
     },
+    modified: {
+        type: Number,
+        default: 0
+    }
 }, { timestamps: true })
 
 postSchema.plugin(mongoosePaginate);

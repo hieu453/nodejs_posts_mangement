@@ -6,10 +6,10 @@ module.exports = (req, res, next) => {
                 next();
                 break;
             case 0:
-                res.send("Bạn không có quyền truy cập vào admin")
+                res.send("Bạn không có quyền truy cập vào admin.<a href='/'> Click để về trang chủ</a>")
                 break;
             default:
-                res.send("Bạn không có quyền truy cập vào admin")
+                res.send("Bạn không có quyền truy cập vào admin.<a href='/'> Click để về trang chủ</a>")
         }
         
     } else {

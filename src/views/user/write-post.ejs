@@ -1,0 +1,22 @@
+<%- include('../layouts/header') %>
+
+<div class="container py-3">
+    <form method="POST" action="/user/write-post" enctype="multipart/form-data">
+        <div class="form-group">
+          <label>Tiêu đề</label>
+          <input type="text" name="title" class="form-control" placeholder="Type your title">
+        </div>
+        <div class="form-group">
+          <label>Ảnh</label>
+          <input type="file" name="image" class="form-control" placeholder="Chọn ảnh">
+        </div>
+        <div class="form-group">
+          <label>Nội dung</label>
+          <textarea id="editor" name="description" class="form-control" cols="30" rows="10"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Submit</button>
+    </form>
+</div>
+
+
+<%- include('../layouts/footer') %>

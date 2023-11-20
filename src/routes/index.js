@@ -1,108 +1,50 @@
 const adminRoutes = require('./admin.routes.js')
-const bcrypt = require('bcrypt')
-const User = require('../models/User.js')
 const passport = require('passport')
 const middlewares = require('../middlewares/authPage.js')
-const postRoutes = require('../routes/post.routes.js')
 const validator = require('../utils/validator.js')
 const SignupController = require('../controllers/SignupController.js')
 const LoginController = require('../controllers/LoginController.js')
 const HomeController = require('../controllers/HomeController.js')
-const { validationResult } = require('express-validator')
-
 const ForgotPasswordController = require('../controllers/ForgotPasswordController.js')
+const UserController = require('../controllers/UserController.js')
+const multer  = require('multer')
+const storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+		cb(null, './src/public/uploads/post_image')
+	},
+	filename: function (req, file, cb) {
+		cb(null, uuidv4() +  file.originalname)
+	}
+})
+const upload = multer({storage: storage})
 
 
 module.exports = (app) => {
+    //Admin
     app.use('/admin', adminRoutes)
-    app.use('/post', postRoutes)
-    app.get('/about', middlewares.authPage, (req, res)=>res.send('about page'))
 
     //Home
-    app.get('/', HomeController.index)   
+    app.get('/', HomeController.index)  
+    app.get('/post/:id', HomeController.allPost) 
 
     //User
-    app.get('/user/manage-post', middlewares.authPage, (req, res) => {
-        res.render('user/manage-post')
-    })
-
-    app.get('/user/change-info', middlewares.authPage, async (req, res) => {
-        const user = await User.findById(req.user._id)
-        
-        res.render('user/change-info', { user })
-    })
-
-    app.post('/user/change-info', middlewares.authPage, validator.changeUsernameAndEmail(), async (req, res) => {
-        const result = validationResult(req)
-        const errors = result.array()  
-        if ((req.body.name != req.user.name) || (req.body.email != req.user.email)) {
-            if (errors.length > 0) {
-                res.render('user/change-info', {errors})
-            } else {
-                try {
-                    await User.findByIdAndUpdate(req.user._id, {
-                        name: req.body.name,
-                        email: req.body.email
-                    }, { runValidators: true, context: 'query' })
-                    req.session.message = {
-                        type: 'success',
-                        text: 'Thông tin đã được thay đổi'
-                    }
-                    res.redirect('/user/change-info')
-                } catch(err) {
-                    req.session.message = {
-                        type: 'danger',
-                        text: 'Tên người dùng hoặc email đã tồn tại'
-                    }
-                    res.redirect('/user/change-info')
-                }
-            }
-        } else {
-            req.session.message = {
-                type: 'success',
-                text: 'Thông tin đã được thay đổi'
-            }
-            res.redirect('/user/change-info')
-        }
-    })
-
-    app.get('/user/change-password', middlewares.authPage, (req, res) => {
-        res.render('user/change-password')
-    })
-
-    app.post('/user/change-password', middlewares.authPage, validator.newPasswordCheck(), (req, res) => {
-        bcrypt.compare(req.body.password, req.user.password)
-            .then(async (result) => {
-                if (result) {
-                    const errors = validationResult(req)
-                    const errorsArray = errors.array()  
-
-                    if (errorsArray.length > 0) {
-                        res.render('user/change-password', {errorsArray})
-                    } else {
-                        const newPassword = await bcrypt.hash(req.body.newPassword, 10)
-                        await User.findByIdAndUpdate(req.user._id, { password: newPassword })
-                        req.session.message = {
-                            type: 'success',
-                            text: "Thông tin đã được lưu lại"
-                        }
-                        res.redirect('/user/change-info')
-                    }
-                } else {
-                    res.render('user/change-password', {errMsg: "Mật khẩu cũ không đúng"})
-                }
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-    })
+    app.get('/user/change-info', middlewares.authPage, UserController.changeInfo)
+    app.post('/user/change-info', middlewares.authPage, validator.changeUsernameAndEmail(), UserController.saveInfo)
+    app.get('/user/change-password', middlewares.authPage, UserController.changePassword)
+    app.post('/user/change-password', middlewares.authPage, validator.newPasswordCheck(), UserController.savePassword)
+    app.get('/user/posts', middlewares.authPage, UserController.mangePost)
+    app.get('/user/edit-post/:id', middlewares.authPage, UserController.editPost)
+    app.post('/user/edit-post/:id', upload.single('image'), middlewares.authPage, UserController.updatePost)
+    app.get('/user/delete-post/:id', middlewares.authPage, UserController.removePost)
+    app.get('/user/write-post', middlewares.authPage, UserController.writePost)
+    app.post('/user/write-post', upload.single('image'), UserController.savePost)
     
     //Login
     app.get('/login', LoginController.index)
     app.post('/login', passport.authenticate('local', {
             failureRedirect: '/login',
             failureFlash : true,
-            
+            keepSessionInfo: true
         }),
         LoginController.loggedIn
     )  
@@ -111,7 +53,7 @@ module.exports = (app) => {
     //Signup
     app.get('/signup', SignupController.index)
     app.get('/signed-up', SignupController.signedUp)
-    app.post('/signup',validator.auth(), SignupController.signUp)
+    app.post('/signup', validator.auth(), SignupController.signUp)
 
 
     //Forgot password

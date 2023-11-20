@@ -3,7 +3,7 @@
 
 <div class="login-form bg-light mt-4 p-4">
     <% if (typeof message != 'undefined') { %>
-        <div class="alert alert-`<%= message.type %>` alert-dismissible fade show" role="alert">
+        <div class="alert alert-<%= message.type %> alert-dismissible fade show" role="alert">
             <%= message.text %>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
@@ -69,9 +69,6 @@
         </div>
     </form>
     <hr class="mt-4">
-    <div class="col-12">
-        <p class="text-center mb-0">Have not account yet? <a href="#">Signup</a></p>
-    </div>
 </div>
 
 

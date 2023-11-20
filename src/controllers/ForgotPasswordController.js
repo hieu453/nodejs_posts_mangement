@@ -22,14 +22,14 @@ module.exports = {
                 if (user[0]) {
                     sendResetEmail(user[0], redirectUrl, res);
                 } else {
-                    res.json({message: "user doesn't exist"})
+                    res.json({message: "Người dùng không tồn tại"})
                 }
             })
             .catch(err => console.log(err))
     },
     ResetPassword(req, res) {
         if (req.body.newPassword != req.body.confirmNewPassword) {
-            req.session.message = "don't match"
+            req.session.message = "Mật khẩu mới và xác nhận mật khẩu mới không khớp!"
             return res.redirect('back')
         }
         const userId = req.params.id;
@@ -46,7 +46,7 @@ module.exports = {
                     if (expiredAt < Date.now()) {
                         ResetPassword.deleteOne({userId})
                             .then(() => {
-                                res.json({message: 'Password reset link has expired'})
+                                res.json({message: 'Liên kết reset mật khẩu đã hết hạn'})
                             })
                             .catch(err => console.log(err))
                     } else {

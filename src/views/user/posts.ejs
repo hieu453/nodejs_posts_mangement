@@ -1,0 +1,45 @@
+<%- include('../layouts/header') %>
+
+<div class="container my-3">
+    <% if (typeof message != 'undefined') { %>
+        <div class="alert alert-<%= message.type %> alert-dismissible fade show" role="alert">
+            <%= message.text %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <% } %>
+    <table class="table" id="user-posts">
+        <thead>
+            <tr>
+                <th scope="col">STT</th>
+                <th scope="col">Tên bài viết</th>
+                <th scope="col">Ngày đăng</th>
+                <th scope="col">Lựa chọn</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (userPosts.length > 0) { %>
+                <% let i = 0 %>
+                <% userPosts.forEach(userPost => { %>
+                    <tr>
+                        <th scope="row"><%= ++i %></th>
+                        <td><%= userPost.title %></td>
+                        <td><%= moment(userPost.createdAt).format('DD-MM-YYYY') %></td>
+                        <td>
+                            <a href="/user/edit-post/<%= userPost._id %>" class="btn btn-success">Sửa</a>
+                            <a href="/user/delete-post/<%= userPost._id %>" onclick="return confirm('Bạn có chắc muốn xóa bài viết này?')" class="btn btn-danger">Xóa</a>
+                        </td>
+                    </tr>
+                <% }) %>
+            <% } else { %>
+                <tr>
+                    <td colspan="4">
+                        <p class="text text-center">Bạn chưa có bài viết nào</p>
+                    </td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+</div>
+
+<%- include('../layouts/footer') %>
+
