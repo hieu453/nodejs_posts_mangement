@@ -12,29 +12,33 @@ module.exports = {
     },
 
     async signUp(req, res) {
-        const username = await User.findOne({name: req.body.name})
-        const email = await User.findOne({email: req.body.email})
+        const username = await User.exists({name: req.body.name})
+        const email = await User.exists({email: req.body.email})
         const result = validationResult(req)
         const errors = result.array()     
-                   
 
         if (username) {
             errors.push({
-                value: username.name,
+                value: req.body.name,
                 msg: 'Username đã tồn tại',
                 path: 'name'
             })
         }
         if (email) {
             errors.push({
-                value: email.email,
+                value: req.body.email,
                 msg: 'Email đã tồn tại',
                 path: 'email'
             })
         }
         
         if (errors.length > 0) {
-            res.render('auth/signup', {errors})
+            res.render('auth/signup', {
+                errors,
+                requestName: req.body.name,
+                requestEmail: req.body.email,
+                requestPassword: req.body.password,
+            })
         } else {
             try {
                 bcrypt.hash(req.body.password, 10, function(err, hash) {

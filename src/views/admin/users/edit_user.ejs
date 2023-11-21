@@ -10,12 +10,12 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3>Tạo người dùng
+                <h3>Sửa thông tin người dùng
                     <a href="/admin/all-users" class="btn btn-sm btn-primary float-end">Trở lại</a>
                 </h3>
             </div>
             <div class="card-body">
-                <form action="/admin/create-user" method="post">
+                <form action="/admin/edit-user/<%= user._id %>" method="POST">
                     <div class="row">
                         <div class="col-md-12 mb-3">
                             <label>Tên</label>
@@ -39,7 +39,7 @@
                                 <% }) %>
 
                             <% } else { %>
-                                <input type="text" name="name" class="form-control"/>
+                                <input type="text" name="name" class="form-control" value="<%= user.name %>"/>
                             <% } %>
                         </div>
                         <div class="col-md-12 mb-3">
@@ -64,7 +64,7 @@
                                 <% }) %>
 
                             <% } else { %>
-                                <input type="text" name="email" class="form-control"/>
+                                <input type="text" name="email" class="form-control" value="<%= user.email %>"/>
                             <% } %>
                         </div>
                         <div class="col-md-12 mb-3">
@@ -95,12 +95,17 @@
                         <div class="col-md-6 mb-3">
                             <label>Chức vụ</label>
                             <select name="role" class="form-control">
-                                <option value="0">User</option>
-                                <option value="1">Admin</option>
+                                <% if (user.role == 1) { %>
+                                    <option value="1" selected>Admin</option>
+                                    <option value="0">User</option>
+                                <% } else { %>
+                                    <option value="1">Admin</option>
+                                    <option value="0" selected>User</option>
+                                <% } %>
                             </select>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <button type="submit" class="btn btn-primary float-end">Tạo</button>
+                            <button type="submit" class="btn btn-primary float-end">Sửa</button>
                         </div>
                     </div>
                 </form>

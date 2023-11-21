@@ -39,7 +39,7 @@
                                                     <% }}) %>
 
                                                     <% if (flag == 0) { %>
-                                                    <input type="text" name="name" class="form-control" required/>
+                                                    <input type="text" name="name" class="form-control" value="<%= requestName %>" required/>
                                                     <% } %>
 
                                                     <% errors.forEach(error => { %>
@@ -47,6 +47,7 @@
                                                     <label class="form-label text-danger"><%= error.msg %></label>
                                                     <% } %>
                                                     <% }) %>
+                                                    
                                                     <% } else { %>
                                                     <input type="text" name="name" class="form-control" required/>
                                                     <% } %>
@@ -67,8 +68,9 @@
                                                     <% }}) %>
 
                                                     <% if (flag == 0) { %>
-                                                    <input type="email" name="email" id="email" class="form-control" required />
+                                                    <input type="email" name="email" id="email" class="form-control" value="<%= requestEmail %>" required />
                                                     <% } %>
+
                                                     <% errors.forEach(error => { %>
                                                     <% if (error.path == 'email') { %>
                                                     <label class="form-label text-danger"><%= error.msg %></label>
@@ -92,9 +94,10 @@
                                                     <input type="password" name="password" id="password"
                                                         class="form-control" value="<%= error.value %>" required/>
                                                     <% }}) %>
+
                                                     <% if (flag == 0) { %>
                                                     <input type="password" name="password" id="password"
-                                                    class="form-control" required/>
+                                                    class="form-control" value="<%= requestPassword %>" required/>
                                                     <% } %>
                                                     
                                                     <% errors.forEach(error => { %>
