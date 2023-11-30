@@ -154,16 +154,18 @@ module.exports = {
 
     async removePost(req, res) {
         const post = await Post.findById(req.params.id)
-        Post.findByIdAndDelete(req.params.id)
-        .then(() => {
+        try {
             fs.unlink('./src/public/uploads/post_image/' + post.image, (err) => {
                 err ? console.log(err) : console.log('old image was removed')
             })
+            await Post.findByIdAndDelete(req.params.id)
             req.session.message = {
                 text: "Đã xóa bài viết!",
                 type: "success"
             }
             res.redirect('/user/posts')
-        })
+        } catch (err) {
+            console.log(err.message)
+        }
     }
 }

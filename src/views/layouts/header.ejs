@@ -78,7 +78,7 @@
                         <a class="nav-link" href="#">Link</a>
                     </li>
                     <form class="d-flex" role="search" method="GET" action="/search">
-                        <input class="form-control me-2" value="<%= (typeof searchValue != 'undefined') ? searchValue : ''%>" type="text" name="search" placeholder="Nhập từ khóa">
+                        <input required class="form-control me-2" value="<%= (typeof searchValue != 'undefined') ? searchValue : ''%>" type="text" name="search" placeholder="Nhập từ khóa">
                         <button class="btn btn-outline-success" type="submit">Tìm</button>
                     </form>
                     </ul>

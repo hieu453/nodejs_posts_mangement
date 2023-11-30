@@ -26,6 +26,7 @@ router.get('/edit-user/:id', [middlewares.authPage, isAdmin], AdminController.ed
 router.post('/edit-user/:id', [middlewares.authPage, isAdmin], validator.changeUsernameAndEmail(), AdminController.saveChangeUser)
 router.get('/edit-user/:id/password', [middlewares.authPage, isAdmin], AdminController.editUserPassword)
 router.post('/edit-user/:id/password', [middlewares.authPage, isAdmin], validator.passwordCheck(), AdminController.saveChangeUserPassword)
+router.get('/user/:id/delete', [middlewares.authPage, isAdmin], AdminController.removeUser)
 router.get('/settings', [middlewares.authPage, isAdmin], AdminController.setting)
 router.post('/settings', [middlewares.authPage, isAdmin], validator.changeUsernameAndEmail(), AdminController.saveSetting)
 router.get('/password-setting', [middlewares.authPage, isAdmin], AdminController.passwordSetting)

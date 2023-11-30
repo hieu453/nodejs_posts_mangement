@@ -187,6 +187,20 @@ module.exports = {
         }
     },
 
+    removeUser(req, res) {
+        User.findByIdAndDelete(req.params.id)
+            .then(() => {
+                req.session.message = {
+                    text: "Đã xóa người dùng!",
+                    type: "success"
+                }
+                res.redirect('/admin/all-users')
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    },
+
     async setting(req, res) {
         const user = await User.findById(req.user._id).exec();
 
@@ -332,17 +346,20 @@ module.exports = {
         }
     },
 
-    removePost(req, res) {
-        Post.findByIdAndDelete(req.params.id)
-        .then(() => {
+    async removePost(req, res) {
+        const post = await Post.findById(req.params.id)
+        try {
             fs.unlink('./src/public/uploads/post_image/' + post.image, (err) => {
                 err ? console.log(err) : console.log('old image was removed')
             })
+            await Post.findByIdAndDelete(req.params.id)
             req.session.message = {
                 text: "Đã xóa bài viết!",
                 type: "success"
             }
             res.redirect('/admin/all-posts')
-        })
+        } catch (err) {
+            console.log(err.message)
+        }
     }
 }
