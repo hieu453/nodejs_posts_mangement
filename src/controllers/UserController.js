@@ -143,7 +143,7 @@ module.exports = {
                 modified: 1
             })
             req.session.message = {
-                text: 'updated',
+                text: 'Cập nhật bài viết thành công',
                 type: 'success'
             }
             res.redirect('/user/posts')
@@ -152,9 +152,13 @@ module.exports = {
         }
     },
 
-    removePost(req, res) {
+    async removePost(req, res) {
+        const post = await Post.findById(req.params.id)
         Post.findByIdAndDelete(req.params.id)
         .then(() => {
+            fs.unlink('./src/public/uploads/post_image/' + post.image, (err) => {
+                err ? console.log(err) : console.log('old image was removed')
+            })
             req.session.message = {
                 text: "Đã xóa bài viết!",
                 type: "success"

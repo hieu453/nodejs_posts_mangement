@@ -5,8 +5,9 @@
 <%- include('./layouts/sidebar') %>
 <div class="main-panel">
 <div class="content-wrapper">
+    
     <div class="card-header">
-        <a href="/admin/all-users" class="btn btn-sm btn-primary float-end">Trở lại</a>
+        <a href="/admin/dashboard" class="btn btn-sm btn-primary float-end">Trở lại</a>
     </div>
     <div class="login-form bg-light mt-4 p-4">
         <% if (typeof message != 'undefined') { %>
@@ -70,7 +71,7 @@
                 <% } %>
             </div>
             <div class="col-6">
-                <span><a href="/user/change-password">Đổi mật khẩu</a></span>
+                <span><a href="/admin/password-setting">Đổi mật khẩu</a></span>
             </div>
             <div class="col-6">
                 <button type="submit" class="btn btn-dark float-end">Đổi thông tin</button>

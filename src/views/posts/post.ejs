@@ -8,8 +8,8 @@
 </div>
 <div class="row">
     <p class="col-6">
-        Posted by <b><%= post.author %></b>
-        on <%= moment(post.createdAt).format('DD-MM-YYYY') %>
+        Đăng bởi <b><%= post.author %></b>
+        vào ngày <%= moment(post.createdAt).format('DD-MM-YYYY') %>
     </p>
     <p class="col-6 text-end">
         <% if (post.modified == 1) { %>

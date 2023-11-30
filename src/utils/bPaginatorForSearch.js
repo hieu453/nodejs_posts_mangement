@@ -12,23 +12,23 @@ module.exports = (page, limit, result, q) => {
                 return html;
             }
             prelink = this.preparePreLink(result.prelink);
-            html += '<li class="page-item"><a class="page-link" href="?page=1">First</a></li>';
+            html += '<li class="page-item"><a class="page-link" href="?page=1&search='+q+'">First</a></li>';
             if(result.previous) {
-                html += '<li class="page-item"><a class="page-link" href="' + prelink + result.previous + '">' + this.options.translator('PREVIOUS') + '</a></li>';
+                html += '<li class="page-item"><a class="page-link" href="' + prelink + result.previous + '&search='+ q +'">' + this.options.translator('PREVIOUS') + '</a></li>';
             }
             if(result.range.length) {
                 for( i = 0, len = result.range.length; i < len; i++) {
                     if(result.range[i] === result.current) {
-                        html += '<li class="active page-item"><a class="page-link" href="' + prelink + result.range[i] + '">' + result.range[i] + '</a></li>';
+                        html += '<li class="active page-item"><a class="page-link" href="' + prelink + result.range[i] + '&search='+ q +'">' + result.range[i] + '</a></li>';
                     } else {
-                        html += '<li class="page-item"><a class="page-link" href="' + prelink + result.range[i] + '">' + result.range[i] + '</a></li>';
+                        html += '<li class="page-item"><a class="page-link" href="' + prelink + result.range[i] + '&search='+ q +'">' + result.range[i] + '</a></li>';
                     }
                 }
             }
             if(result.next) {
-                html += '<li class="page-item"><a class="page-link" href="' + prelink + result.next + '" class="paginator-next">' + this.options.translator('NEXT') + '</a></li>';
+                html += '<li class="page-item"><a class="page-link" href="' + prelink + result.next + '&search='+ q +'" class="paginator-next">' + this.options.translator('NEXT') + '</a></li>';
             }
-            html += `<li class="page-item"><a class="page-link" href="?page=${result.pageCount}">Last</a></li>`;
+            html += `<li class="page-item"><a class="page-link" href="?page=${result.pageCount}&search=${q}">Last</a></li>`;
             html += '</ul></div>';
             return html;
         }

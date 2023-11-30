@@ -16,6 +16,9 @@
 <script>
     let table = new DataTable('#user-posts', {
         // "dom": 'lrtip',
+        "language": {
+            "emptyTable": "Bạn chưa có bài viết nào"
+        },
         "columns": [
             { "searchable": false },
             { "searchable": true },

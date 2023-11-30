@@ -16,8 +16,8 @@
                 <th scope="col">Lựa chọn</th>
             </tr>
         </thead>
-        <tbody>
-            <% if (userPosts.length > 0) { %>
+        <% if (userPosts.length > 0) { %>
+            <tbody>
                 <% let i = 0 %>
                 <% userPosts.forEach(userPost => { %>
                     <tr>
@@ -30,14 +30,8 @@
                         </td>
                     </tr>
                 <% }) %>
-            <% } else { %>
-                <tr>
-                    <td colspan="4">
-                        <p class="text text-center">Bạn chưa có bài viết nào</p>
-                    </td>
-                </tr>
+            </tbody>
             <% } %>
-        </tbody>
     </table>
 </div>
 

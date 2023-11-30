@@ -16,9 +16,9 @@
         <% } %>
         <div class="card">
             <div class="card-header">
-                <h3>Tất cả người dùng
-                    <a href="/admin/create-user" class="btn btn-sm btn-primary float-end">
-                        Thêm người dùng
+                <h3>Tất cả bài viết
+                    <a href="/admin/create-post" class="btn btn-sm btn-primary float-end">
+                        Thêm bài viết
                     </a>
                 </h3>
             </div>
@@ -27,30 +27,22 @@
                     <thead>
                         <tr>
                             <th>STT</th>
-                            <th>Tên</th>
-                            <th>Email</th>
-                            <th>Chức vụ</th>
+                            <th>Tiêu đề</th>
+                            <th>Ngày đăng</th>
                             <th>Tùy chọn</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <% if (users.length > 0) { %>
+                        <% if (posts.length > 0) { %>
                             <% let i = 0 %>
-                            <% users.forEach(user => { %>
+                            <% posts.forEach(post => { %>
                                 <tr>
                                     <td><%= ++i %></td>
-                                    <td><%= user.name %></td>
-                                    <td><%= user.email %></td>
+                                    <td><%= post.title %></td>
+                                    <td><%= moment(post.createdAt).format('DD-MM-YYYY') %></td>
                                     <td>
-                                        <% if (user.role == 1) { %>
-                                            <label class="badge btn btn-primary">Admin</label>    
-                                        <% } else { %>
-                                            <label class="badge btn btn-success">User</label>
-                                        <% } %>
-                                    </td>
-                                    <td>
-                                        <a href="/admin/edit-user/<%= user._id %>" class="btn btn-sm btn-success">Edit</a>
-                                        <a onclick="return confirm('Bạn có muốn xóa người dùng này?')" href="/admin/user/<%= user._id %>/delete" class="btn btn-sm btn-danger">
+                                        <a href="/admin/edit-post/<%= post._id %>" class="btn btn-sm btn-success">Edit</a>
+                                        <a onclick="return confirm('Bạn có muốn xóa bài viết này?')" href="/admin/post/<%= post._id %>/delete" class="btn btn-sm btn-danger">
                                             Delete
                                         </a>
                                     </td>
@@ -75,12 +67,11 @@
     let table = new DataTable('#search-table', {
         // "dom": 'lrtip',
         "language": {
-            "emptyTable": "Chưa có người dùng nào"
+            "emptyTable": "Chưa có bài viết nào"
         },
         "columns": [
             { "searchable": false },
             { "searchable": true },
-            { "searchable": false },
             { "searchable": false },
             { "searchable": false },
         ]

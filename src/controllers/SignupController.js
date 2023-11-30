@@ -41,11 +41,11 @@ module.exports = {
             })
         } else {
             try {
-                bcrypt.hash(req.body.password, 10, function(err, hash) {
+                bcrypt.hash((req.body.password).trim(), 10, function(err, hash) {
                     const defaultAvatar = `https://api.dicebear.com/7.x/adventurer/svg?seed=${req.body.name}`
                     const user = new User({
-                        name: req.body.name,
-                        email: req.body.email,
+                        name: (req.body.name).trim(),
+                        email: (req.body.email).trim(),
                         password: hash,
                         default_avatar: defaultAvatar,
                         role: 0,

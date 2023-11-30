@@ -77,48 +77,66 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Link</a>
                     </li>
+                    <form class="d-flex" role="search" method="GET" action="/search">
+                        <input class="form-control me-2" value="<%= (typeof searchValue != 'undefined') ? searchValue : ''%>" type="text" name="search" placeholder="Nhập từ khóa">
+                        <button class="btn btn-outline-success" type="submit">Tìm</button>
+                    </form>
                     </ul>
                     <div class="d-flex">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item nav-profile">
-                                <% if (typeof isLoggedIn != 'undefined' && typeof user != 'undefined') { %>
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <div class="profile-pic">
-                                            <img src="<%= user.default_avatar %>" alt="Profile Picture">
-                                            </div>
-                                        </a>
-                                        <ul class="dropdown-menu">
-                                            <li>
-                                                <a class="dropdown-item" href="/user/write-post">
-                                                <i class="fa-solid fa-pencil"></i>
-                                                Viết bài
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="/user/change-info">
-                                                <i class="fa-solid fa-gear"></i>
-                                                Sửa thông tin
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="/user/posts">
-                                                <i class="fa-solid fa-list"></i>
-                                                Bài viết của bạn
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="/logout">
-                                                <i class="fa-solid fa-right-from-bracket"></i>
-                                                Đăng xuất
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <% } else { %>
-                                    <a class="nav-link active" href="/login">Login</a>
-                                <% } %>
+                            <% if (typeof isLoggedIn != 'undefined' && typeof user != 'undefined') { %>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <div class="profile-pic">
+                                        <img src="<%= user.default_avatar %>" alt="Profile Picture">
+                                        </div>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" href="/user/write-post">
+                                            <i class="fa-solid fa-pencil"></i>
+                                            Viết bài
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="/user/change-info">
+                                            <i class="fa-solid fa-gear"></i>
+                                            Sửa thông tin
+                                            </a>
+                                        </li>
+                                        <% if (user.role == 1) { %>
+                                        <li>
+                                            <a class="dropdown-item" href="/admin/dashboard">
+                                            <i class="fa-solid fa-user"></i>
+                                            Vào Dashboard
+                                            </a>
+                                        </li>
+                                        <% } %>
+                                        <li>
+                                            <a class="dropdown-item" href="/user/posts">
+                                            <i class="fa-solid fa-list"></i>
+                                            Bài viết của bạn
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="/logout">
+                                            <i class="fa-solid fa-right-from-bracket"></i>
+                                            Đăng xuất
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
                             </li>
+                            <% } else { %>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="/signup">Đăng ký</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="/login">Đăng nhập</a>
+                            </li>
+                            <% } %>
+                                    
                         </ul>
                     </div>
                 </div>

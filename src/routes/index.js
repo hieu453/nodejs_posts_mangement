@@ -7,6 +7,7 @@ const LoginController = require('../controllers/LoginController.js')
 const HomeController = require('../controllers/HomeController.js')
 const ForgotPasswordController = require('../controllers/ForgotPasswordController.js')
 const UserController = require('../controllers/UserController.js')
+const { v4: uuidv4 } = require('uuid')
 const multer  = require('multer')
 const storage = multer.diskStorage({
 	destination: function (req, file, cb) {
@@ -24,7 +25,8 @@ module.exports = (app) => {
     app.use('/admin', adminRoutes)
 
     //Home
-    app.get('/', HomeController.index)  
+    app.get('/', HomeController.index)
+    app.get('/search', HomeController.search)  
     app.get('/post/:id', HomeController.allPost) 
 
     //User

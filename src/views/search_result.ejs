@@ -1,0 +1,40 @@
+<%- include('layouts/header') %>
+
+<div class="row my-3">
+    <h2>Kết quả tìm kiếm cho từ khóa: <%= searchValue %></h2>
+</div>
+<div class="row row-cols-1 row-cols-md-3 g-4 my-3">
+    <% if (posts.length > 0) { %>
+        <% posts.forEach(post => { %>
+            <div class="col">
+            <a href="/post/<%= post._id %>" class="text-decoration-none">
+            <div class="card h-100" title="<%= post.title %>">
+                <img src="/uploads/post_image/<%= post.image %>" class="card-img-top" alt="...">
+                <div class="card-body">
+                <h5 class="card-title text-capitalize"><%= post.title %></h5>
+                <p class="card-text text-truncate">Tác giả: <%= post.author %></p>
+                </div>
+                <div class="card-footer">
+                <small class="text-body-secondary" id="elapsed-time">
+                    Đăng ngày: <%= moment(post.createdAt).format('DD-MM-YYYY') %> lúc <%= moment(post.createdAt).format("h:mm a") %>
+                    | <%= moment(post.createdAt).fromNow(); %>
+                </small>
+                </div>
+            </div>
+            </a>
+            </div>
+        <% }) %>
+    <% } else { %>
+        <div class="row">
+            <p class="text-center">Chưa có bài viết nào</p>
+        </div>
+    <% } %>
+</div>
+
+<div class="row">
+    <%- bPaginatorForSearch %>
+</div>
+
+
+
+<%- include('layouts/footer') %>

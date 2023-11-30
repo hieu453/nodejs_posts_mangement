@@ -12,12 +12,12 @@ module.exports = (passport) => {
             try {
                 const user = await User.findOne({ name: name.trim() }) 
                 if (!user) {
-                    return done(null, false, { message: 'Incorrect username' })
+                    return done(null, false, { message: 'Sai tên đăng nhập!' })
                 }
                 
                 bcrypt.compare(password.trim(), user.password).then(function(result) {
                     if (result == false) {
-                        return done(null, false, { message: 'Incorrect password' })
+                        return done(null, false, { message: 'Sai mật khẩu' })
                     } else {
                         return done(null, user)
                     }

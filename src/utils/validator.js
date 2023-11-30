@@ -17,5 +17,8 @@ module.exports = {
     },
     newPasswordCheck() {
         return check('newPassword', 'Password mới phải tối thiểu 6 ký tự').isLength({min:6})
+    },
+    passwordCheck() {
+        return check('password', 'Password phải tối thiểu 6 ký tự').isLength({min:6})
     }
 }
