@@ -34,7 +34,6 @@
                 <% if (flag == 0) { %>
                 <input type="text" name="name" class="form-control" placeholder="Username" value="<%= user.name %>" required/>
                 <% } %>
-                    <% console.log(user) %>
                 <% errors.forEach(error => { %>
                 <% if (error.path == 'name') { %>
                 <label class="form-label text-danger"><%= error.msg %></label>

@@ -27,7 +27,7 @@ module.exports = (app) => {
     //Home
     app.get('/', HomeController.index)
     app.get('/search', HomeController.search)  
-    app.get('/post/:id', HomeController.allPost) 
+    app.get('/post/:id', HomeController.postDetail) 
 
     //User
     app.get('/user/change-info', middlewares.authPage, UserController.changeInfo)

@@ -1,7 +1,7 @@
 <%- include('layouts/header') %>
 
-<div class="row row-cols-1 row-cols-md-3 g-4 my-3">
-    <% if (posts.length > 0) { %>
+<% if (posts.length > 0) { %>
+    <div class="row row-cols-1 row-cols-md-3 g-4 my-3">
         <% posts.forEach(post => { %>
             <div class="col">
             <a href="/post/<%= post._id %>" class="text-decoration-none">
@@ -20,13 +20,13 @@
             </div>
             </a>
             </div>
-        <% }) %>
+    </div>
+    <% }) %>
     <% } else { %>
-        <div class="row">
+        <div class="row mt-3">
             <p class="text-center">Chưa có bài viết nào</p>
         </div>
     <% } %>
-</div>
 
 <div class="row">
     <%- bPaginator %>

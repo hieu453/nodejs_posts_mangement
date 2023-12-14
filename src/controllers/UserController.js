@@ -10,6 +10,7 @@ module.exports = {
         let userPosts = await Post.find({ author: req.user.name }).exec();
              
         res.render('user/posts', { 
+            title: "Quản lý bài viết của bạn",
             userPosts, 
             moment 
         })
@@ -18,7 +19,10 @@ module.exports = {
     async changeInfo(req, res) {
         const user = await User.findById(req.user._id).exec();
         
-        res.render('user/change-info', { user })
+        res.render('user/change-info', { 
+            title: "Thay đổi thông tin",
+            user,
+        })
     },
 
     async saveInfo(req, res) {
@@ -56,7 +60,9 @@ module.exports = {
     },
 
     changePassword(req, res) {
-        res.render('user/change-password')
+        res.render('user/change-password', {
+            title: "Thay đổi mật khẩu"
+        })
     },
 
     savePassword(req, res) {
@@ -87,7 +93,9 @@ module.exports = {
     },
 
     writePost(req, res) {
-        res.render('user/write-post')
+        res.render('user/write-post', {
+            title: "Viết bài"
+        })
     },
 
     savePost(req, res) {
@@ -115,7 +123,10 @@ module.exports = {
     editPost(req, res) {
         Post.findById(req.params.id)
             .then((post) => {
-                res.render('user/edit-post', { post })
+                res.render('user/edit-post', {
+                    title: "Sửa bài viết",
+                    post
+                })
 
             })
     },
