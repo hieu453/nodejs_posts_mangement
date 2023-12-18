@@ -1,9 +1,13 @@
 
 module.exports = {
     index(req, res) {
-        const errmessage = req.flash('error')[0]
+        if (!req.session.isLoggedIn) {
+            const errmessage = req.flash('error')[0]
         
-        res.render('auth/login', { message: errmessage })
+            res.render('auth/login', { message: errmessage })
+        } else {
+            res.redirect('/')
+        }
     },
 
     loggedIn(req, res) {
