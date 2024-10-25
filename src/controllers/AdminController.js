@@ -7,6 +7,7 @@ moment.locale('vi')
 const fs = require('fs')
 
 module.exports = {
+    //hiển thị phần giao diện dashboard
     async dashboard(req, res) {
         const users = await User.count({})
         const posts = await Post.count({})
@@ -17,6 +18,7 @@ module.exports = {
         })
     },
 
+    //Lấy tất cả người dùng hiện có rồi hiển thị ra view 
     async allUsers(req, res) {
         const users = await User.find({ _id: { $ne: req.user._id } })
         
@@ -25,16 +27,22 @@ module.exports = {
         })
     },
 
+    //phần hiển thị ra trang tạo một người dùng mới
     createUser(req, res) {
         res.render('admin/users/create_user')
     },
 
+    //Lưu người dùng vừa tạo 
     async saveUser(req, res) {
+        //Lấy ra username
         const username = await User.exists({name: req.body.name})
+        // Lấy email
         const email = await User.exists({email: req.body.email})
+        // xác thực request gửi lên
         const result = validationResult(req)
         const errors = result.array()     
 
+        //kiểm tra username và email, nếu tồn tại thì ném ra lỗi
         if (username) {
             errors.push({
                 value: req.body.name,
@@ -87,6 +95,7 @@ module.exports = {
         }
     },
 
+    // Giao diện sửa người dùng
     editUser(req, res) {
         User.findById(req.params.id)
             .then((_user) => {
@@ -99,6 +108,7 @@ module.exports = {
             })
     },
 
+    // Lưu thay đổi thông tin người dùng
     async saveChangeUser(req, res) {
         const username = await User.findOne({name: req.body.name, _id: { $ne: req.params.id }})
         const email = await User.findOne({email: req.body.email, _id: { $ne: req.params.id }})
@@ -148,6 +158,7 @@ module.exports = {
         }
     },
 
+    // Giao diện thay đổi mật khẩu
     editUserPassword(req, res) {
         User.findById(req.params.id)
             .then((_user) => {
@@ -160,6 +171,7 @@ module.exports = {
             })
     },
 
+    // Lưu mật khẩu vừa đổi
     async saveChangeUserPassword(req, res) {
         const result = validationResult(req)
         const errors = result.array() 
@@ -187,6 +199,7 @@ module.exports = {
         }
     },
 
+    //Xóa người dùng
     removeUser(req, res) {
         User.findByIdAndDelete(req.params.id)
             .then(() => {
@@ -201,12 +214,14 @@ module.exports = {
             })
     },
 
+    // Giao diện setting
     async setting(req, res) {
         const user = await User.findById(req.user._id).exec();
 
         res.render('admin/settings', { user })
     },
 
+    // Sau khi thay đổi setting thì lưu
     async saveSetting(req, res) {
         const result = validationResult(req)
         const errors = result.array()  
@@ -274,6 +289,7 @@ module.exports = {
             })
     },
 
+    //Hiện thị tất cả các bài viết hiện có
     async allPosts(req, res) {
         const posts = await Post.find({}).sort({ createdAt: -1 }).exec();
 
@@ -283,10 +299,12 @@ module.exports = {
         })
     },
 
+    // Hiển thị giao diện tạo bài viết 
     createPost(req, res) {
         res.render('admin/posts/create_post')
     },
 
+    // Lưu bài viết vừa tạo
     savePost(req, res) {
         const data = {
             title: req.body.title,
