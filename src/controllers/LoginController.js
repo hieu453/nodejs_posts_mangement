@@ -1,5 +1,5 @@
-
 module.exports = {
+    // cái này quên rồi ko nhớ
     index(req, res) {
         if (!req.session.isLoggedIn) {
             const errmessage = req.flash('error')[0]
@@ -10,6 +10,7 @@ module.exports = {
         }
     },
 
+    // nếu đã đăng nhập thì lưu thông tin
     loggedIn(req, res) {
         
         if (req.body.rememberMe) {
@@ -31,6 +32,7 @@ module.exports = {
         }
     },
 
+    // đăng xuất
     logout(req, res, next) {
         req.logout(function(err) {
             if (err) { return next(err); }
