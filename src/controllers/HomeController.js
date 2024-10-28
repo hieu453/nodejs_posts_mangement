@@ -5,6 +5,7 @@ const bootstrapPaginator = require('../utils/bootstrapPaginator.js');
 const bootstrapPaginatorForSearch = require('../utils/bPaginatorForSearch.js')
 
 module.exports = {
+    // hiển thị các bài viết ở trang chủ, lúc mới vào web
     async index(req, res) {
         const page = parseInt(req.query.page) || 1;
         const limit = 9; // Number of items per page
@@ -25,6 +26,7 @@ module.exports = {
             
     },
 
+    // tìm kiếm
     async search(req, res) {
         const page = parseInt(req.query.page) || 1;
         const limit = 9; // Number of items per page
@@ -45,6 +47,7 @@ module.exports = {
         
     },
 
+    // hiển thị chi tiết bài viết
     async postDetail(req, res) {
         try {
             const post = await Post.findById(req.params.id)
