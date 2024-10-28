@@ -3,20 +3,25 @@ const bcrypt = require('bcrypt')
 const { validationResult } = require('express-validator')
 
 module.exports = {
+    // hiển thị ra trang đăng ký
     index(req, res) {
         res.render('auth/signup')
     },
 
+    // cái này chắc là khi đăng ký xong thì hiển thị ra 1 trang là đã đăng ký, ko nhớ lắm
     signedUp(req, res) {
         res.render('auth/signed-up')
     },
 
+    // đăng ký
     async signUp(req, res) {
+        // kiểm tra xem username và email có trong database chưa
         const username = await User.exists({name: req.body.name})
         const email = await User.exists({email: req.body.email})
         const result = validationResult(req)
         const errors = result.array()     
 
+        // nếu có rồi thì ném ra lỗi
         if (username) {
             errors.push({
                 value: req.body.name,
@@ -40,7 +45,9 @@ module.exports = {
                 requestPassword: req.body.password,
             })
         } else {
+            // nếu chưa có thì bắt đầu lưu
             try {
+                //sử dụng bcrypt để lưu
                 bcrypt.hash((req.body.password).trim(), 10, function(err, hash) {
                     const defaultAvatar = `https://api.dicebear.com/7.x/adventurer/svg?seed=${req.body.name}`
                     const user = new User({
