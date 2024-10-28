@@ -6,6 +6,7 @@ const moment = require('moment')
 const fs = require('fs')
 
 module.exports = {
+    // hiển thị ra các bài viết mà người dùng đã viết
     async mangePost(req, res) {
         let userPosts = await Post.find({ author: req.user.name }).exec();
              
@@ -16,6 +17,7 @@ module.exports = {
         })
     },
 
+    // hiển thị giao diện thay đổi thông tin
     async changeInfo(req, res) {
         const user = await User.findById(req.user._id).exec();
         
@@ -25,6 +27,7 @@ module.exports = {
         })
     },
 
+    // lưu thông tin vừa chỉnh sửa
     async saveInfo(req, res) {
         const result = validationResult(req)
         const errors = result.array()  
@@ -92,12 +95,14 @@ module.exports = {
             })
     },
 
+    // giao diện cho phép viết bài
     writePost(req, res) {
         res.render('user/write-post', {
             title: "Viết bài"
         })
     },
 
+    // lưu bài viết vừa tạo
     savePost(req, res) {
         const data = {
             title: req.body.title,
@@ -120,6 +125,7 @@ module.exports = {
     
     },
 
+    // giao diện thay đổi bài viết
     editPost(req, res) {
         Post.findById(req.params.id)
             .then((post) => {
@@ -131,6 +137,7 @@ module.exports = {
             })
     },
 
+    // sau khi bấm sửa thì cập nhật bài viết
     async updatePost(req, res) {
         let newImage = '';
        
@@ -163,6 +170,7 @@ module.exports = {
         }
     },
 
+    // xóa bài viết
     async removePost(req, res) {
         const post = await Post.findById(req.params.id)
         try {
